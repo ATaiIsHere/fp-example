@@ -60,6 +60,9 @@ export type User = {
 };
 
 export const printResult = <T>(x: T): T => (console.log(x), x);
+export const labelResult =
+  (label: string) =>
+  <T>(x: T): T => (console.log(`${label}:`, x), x);
 
 export const getUsersTask = () =>
   axios.get("https://randomuser.me/api/?results=5");
