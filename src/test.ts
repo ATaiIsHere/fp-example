@@ -1,20 +1,15 @@
-import * as R from "fp-ts/Record";
-import { pipe } from "fp-ts/lib/function";
-import { User, getUser } from "./utils";
-import * as O from "fp-ts/Option";
+import { flow } from "fp-ts/lib/function";
+import { getUser, User } from "./utils";
 
-const partialUser: Partial<User> = {
-  // name: 'John Doe',
-  gender: "male",
-  phone: "123-456-7890",
-  email: "john.doe@example.com",
-};
+const getFirstName = (user: User) => user.name.first;
+const getUserFirstName = flow(getUser, getFirstName, console.log);
 
-const keysToFilter: Array<keyof User> = ["name", "gender", "phone", "email"];
+getUserFirstName(0);
+getUserFirstName(1);
+getUserFirstName(5);
 
-const filteredPartialUser = pipe(
-  partialUser,
-  R.filterWithIndex((key, _value) => keysToFilter.includes(key as keyof User))
-);
-
-console.log(filteredPartialUser);
+// const getName = (user: User) => user.names[0].name;
+// const getUserName = flow(getUser, getName, console.log);
+// getUserName(0);
+// getUserName(1);
+// getUserName(5);

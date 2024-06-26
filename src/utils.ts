@@ -1,8 +1,9 @@
 import axios from "axios";
 import * as O from "fp-ts/Option";
 
-export type User = Partial<{
+export type User = {
   gender: "female" | "male";
+  names: { lang: string; name: string }[];
   name: {
     title: string;
     first: string;
@@ -56,7 +57,7 @@ export type User = Partial<{
     thumbnail: string;
   };
   nat: string;
-}>;
+};
 
 export const printResult = <T>(x: T): T => (console.log(x), x);
 
@@ -66,6 +67,12 @@ export const getUsersTask = () =>
 export const getUsers: () => User[] = () => [
   {
     gender: "male",
+    names: [
+      {
+        lang: "en_US",
+        name: "Joona",
+      },
+    ],
     name: {
       title: "Mr",
       first: "Joona",
@@ -123,6 +130,7 @@ export const getUsers: () => User[] = () => [
   },
   {
     gender: "female",
+    names: [],
     name: {
       title: "Ms",
       first: "Carla",
@@ -180,6 +188,7 @@ export const getUsers: () => User[] = () => [
   },
   {
     gender: "male",
+    names: [],
     name: {
       title: "Monsieur",
       first: "Fabian",
@@ -237,6 +246,7 @@ export const getUsers: () => User[] = () => [
   },
   {
     gender: "male",
+    names: [],
     name: {
       title: "Mr",
       first: "Mauri",
@@ -294,6 +304,7 @@ export const getUsers: () => User[] = () => [
   },
   {
     gender: "female",
+    names: [],
     name: {
       title: "Ms",
       first: "Peyton",
@@ -351,4 +362,9 @@ export const getUsers: () => User[] = () => [
   },
 ];
 
-export const getUser = (i: number) => O.of(getUsers()[i]);
+export const getUser = (i: number) => getUsers()[i];
+export const getUserOption = (i: number) => O.fromNullable(getUsers()[i]);
+export const prop =
+  <M>(key: keyof M) =>
+  (map: M) =>
+    map[key];
